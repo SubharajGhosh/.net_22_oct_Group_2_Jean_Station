@@ -87,12 +87,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Entities\Brand.cs" />
     <Compile Include="Entities\Customer.cs" />
-<<<<<<< HEAD
     <Compile Include="Entities\Jeans.cs" />
+    <Compile Include="Entities\OrderItem.cs" />
+    <Compile Include="Entities\PaymentDetails.cs" />
     <Compile Include="Entities\Shopkeeper.cs" />
-=======
     <Compile Include="Entities\Order.cs" />
->>>>>>> 4bac37036c525dbce24ba677bb7df91635d215b5
     <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

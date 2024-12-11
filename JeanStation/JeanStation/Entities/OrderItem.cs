@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace JeanStation.Entities
 {
     public class OrderItem
     {
-        [Required]
+     
         public string OrderItemId {  get; set; }
         public int Quantity { get; set; }
 
-        [Foreignkey("OrderNavigation")]
+        [ForeignKey("OrderNavigation")]
 
         public string OrderId {  get; set; }
 
@@ -19,7 +20,7 @@ namespace JeanStation.Entities
 
         public int TotalPrice { get; set; }
 
-        [Foreignkey("JeanNavigation")]
+        [ForeignKey("JeanNavigation")]
 
         public string JeansId { get; set; }
 
