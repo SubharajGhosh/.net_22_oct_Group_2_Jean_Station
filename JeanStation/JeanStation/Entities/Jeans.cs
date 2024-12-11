@@ -17,6 +17,6 @@ namespace JeanStation.Entities
         public string Color {  get; set; }
         public string Size {  get; set; }
         public int Stock {  get; set; }
-        public string BrandNavigation {  get; set; }
+        public Brand BrandNavigation {  get; set; }
     }
 }

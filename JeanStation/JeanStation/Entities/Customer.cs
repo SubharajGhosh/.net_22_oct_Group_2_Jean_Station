@@ -10,6 +10,7 @@ namespace JeanStation.Entities
 {
     public class Customer
     {
+       
         [Required(ErrorMessage = "CustomerId is Required")]
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
