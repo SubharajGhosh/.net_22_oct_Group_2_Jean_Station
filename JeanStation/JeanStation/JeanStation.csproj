@@ -87,12 +87,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Entities\Brand.cs" />
     <Compile Include="Entities\Customer.cs" />
-
     <Compile Include="Entities\Jeans.cs" />
+    <Compile Include="Entities\OrderItem.cs" />
+    <Compile Include="Entities\PaymentDetails.cs" />
     <Compile Include="Entities\Shopkeeper.cs" />
-
     <Compile Include="Entities\Order.cs" />
-
     <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
