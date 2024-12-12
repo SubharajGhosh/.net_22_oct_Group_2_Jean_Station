@@ -96,19 +96,16 @@ namespace JeanStation.Repository
             {
                 throw new ArgumentException("UserId, UserName, and Password are required.");
             }
-            if (user.Password.Length < 6)
-            {
-                throw new ArgumentException("Password must be at least 6 characters long.");
-            }
-            string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$";
 
-            if (!Regex.IsMatch(user.Password, passwordPattern))
+            // Validate password (must contain uppercase, lowercase, numeric, and special characters)
+            if (!Regex.IsMatch(user.Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"))
             {
                 throw new ArgumentException("Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.");
             }
 
             return true;
         }
+
 
     }
 }

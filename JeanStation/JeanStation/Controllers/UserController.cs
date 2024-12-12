@@ -23,7 +23,7 @@ namespace JeanStation.Controllers
         }
 
         [HttpGet]
-        [Route("{userId}")]
+        [Route("{userId}", Name = "GetUserById")]
         public IHttpActionResult GetUserById(string userId)
         {
             var user = _userRepository.GetUserById(userId);
@@ -52,6 +52,9 @@ namespace JeanStation.Controllers
 
             try
             {
+                // Validate the user before attempting to create
+                _userRepository.ValidateUser(user);
+
                 bool result = _userRepository.CreateUser(user);
                 if (result)
                 {
@@ -61,6 +64,11 @@ namespace JeanStation.Controllers
                 {
                     return BadRequest("Error creating user."); // Returns HTTP 400 if creation fails
                 }
+            }
+            catch (ArgumentException ex)
+            {
+                // Return a custom error message for validation issues (like password validation)
+                return BadRequest(ex.Message); // Returns HTTP 400 with the specific error message
             }
             catch (Exception ex)
             {
