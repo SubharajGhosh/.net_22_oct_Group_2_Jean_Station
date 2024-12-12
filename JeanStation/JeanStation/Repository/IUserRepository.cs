@@ -8,5 +8,6 @@ namespace JeanStation.Repository
 {
     internal interface IUserRepository
     {
+
     }
 }
