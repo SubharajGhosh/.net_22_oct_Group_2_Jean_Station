@@ -103,6 +103,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\JeansController.cs" />
     <Compile Include="Entities\Brand.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Repository\IJeansRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\JeansRepository.cs" />
   </ItemGroup>
   <ItemGroup>
