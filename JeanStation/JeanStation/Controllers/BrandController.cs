@@ -18,8 +18,8 @@ namespace JeanStation.Controllers
             brandRepository = new BrandRepository();
         }
 
-        [HttpGet,Route("GetAll")]
-        public IHttpActionResult GetAll()
+        [HttpGet,Route("GetAllBrands")]
+        public IHttpActionResult GetAllBrands()
         {
             var v =brandRepository.GetAllBrands();
             return Ok(v);
@@ -32,7 +32,7 @@ namespace JeanStation.Controllers
             return Ok(v);
         }
 
-        [HttpGet, Route("GetBrandsById/{name}")]
+        [HttpGet, Route("GetBrandsById/{id}")]
         public IHttpActionResult GetBrandsById(string id)
         {
             var v = brandRepository.GetBrandById(id);
