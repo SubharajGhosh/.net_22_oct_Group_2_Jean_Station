@@ -15,6 +15,8 @@ namespace JeanStation.Entities
         [ForeignKey("OrderNavigation")]
         public string OrderId {  get; set; }
         public Order OrderNavigation { get; set; }
+        public double TotalAmount { get; set; }
+        public DateTime PaymentDate { get; set; }
         
     }
 }

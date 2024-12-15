@@ -11,7 +11,7 @@ namespace JeanStation.Repository
     {
         User GetUserById(string userId);
         List<User> GetAllUsers();
-        bool CreateUser(User user);
+        bool SignUpCustomer(string username, string password, string customerName, string email, string phoneNumber, string address);
         bool UpdateUser(User user);
         bool DeleteUser(string userId);
         bool ValidateUser(User user);

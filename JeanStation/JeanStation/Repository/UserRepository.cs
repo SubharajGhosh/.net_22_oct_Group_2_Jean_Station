@@ -15,20 +15,39 @@ namespace JeanStation.Repository
         {
             _context = new JeanStationContext();
         }
-        public bool CreateUser(User user)
+        public bool SignUpCustomer(string username, string password, string customerName, string email, string phoneNumber, string address)
         {
-            ValidateUser(user);
-            var existingUser = _context.Users.FirstOrDefault(u => u.UserId == user.UserId);
-            if (existingUser != null)
+            // Ensure username is unique
+            if (_context.Users.Any(u => u.UserName == username))
             {
-                throw new InvalidOperationException("A user with the same UserId already exists.");
+                return false;
             }
+
+            // Create user entry
+            var user = new User
+            {
+                UserId = Guid.NewGuid().ToString(),
+                UserName = username,
+                Password = password,
+                Role = "Customer" // Default role
+            };
             _context.Users.Add(user);
 
-            _context.SaveChanges();
+            // Create customer entry
+            var customer = new Customer
+            {
+                CustomerId = Guid.NewGuid().ToString(), // Generate unique CustomerId
+                CustomerName = customerName,
+                Email = email,
+                PhoneNumber = phoneNumber,
+                Address = address,
+                UserId = user.UserId
+            };
+            _context.Customers.Add(customer);
 
             return true;
         }
+
 
         public bool DeleteUser(string userId)
         {
@@ -39,12 +58,16 @@ namespace JeanStation.Repository
             {
                 throw new InvalidOperationException("User not found.");
             }
+            else if(user.Role=="Customer")
+            {
+                _context.Users.Remove(user);
 
+                // Save changes to the database to persist the deletion
+                _context.SaveChanges();
+
+            }
             // Remove the user from the Users DbSet
-            _context.Users.Remove(user);
-
-            // Save changes to the database to persist the deletion
-            _context.SaveChanges();
+            
 
             // Return true to indicate the user was successfully deleted
             return true;
@@ -71,9 +94,9 @@ namespace JeanStation.Repository
             }
 
             // Update the properties of the existing user with the values from the provided user object
-            existingUser.UserName = user.UserName;
+            //existingUser.UserName = user.UserName;
             existingUser.Password = user.Password;
-            existingUser.Role = user.Role;
+            //existingUser.Role = user.Role;
 
             // Optionally, validate the updated user
             ValidateUser(existingUser);
@@ -105,7 +128,22 @@ namespace JeanStation.Repository
 
             return true;
         }
+        public string Login(string username, string password)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserName == username && u.Password == password);
 
+            if (user == null)
+            {
+                return "Invalid credentials";
+            }
+
+            return user.Role; // Return the role (Customer or Shopkeeper)
+        }
+
+        public bool UserExists(string username)
+        {
+            return _context.Users.Any(u => u.UserName == username);
+        }
 
     }
 }
