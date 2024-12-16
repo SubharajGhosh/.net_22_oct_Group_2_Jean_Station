@@ -43,10 +43,10 @@ namespace JeanStation.Repository
 
         public void OrderCreate(Order order)
         {
-            if (order == null)
-                throw new ArgumentNullException(nameof(order));
+           
 
             _context.Orders.Add(order);
+
             _context.SaveChanges();
         }
 
@@ -94,5 +94,6 @@ namespace JeanStation.Repository
                                   .Where(o => o.CustomerId == customerId)
                                   .ToList();
         }
+
     }
 }

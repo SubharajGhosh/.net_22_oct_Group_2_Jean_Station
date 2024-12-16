@@ -18,7 +18,7 @@ namespace JeanStation.Entities
 
         public int UnitPrice { get; set; }  
 
-        public int TotalPrice { get; set; }
+        public double TotalPrice { get; set; }
 
         [ForeignKey("JeanNavigation")]
 
