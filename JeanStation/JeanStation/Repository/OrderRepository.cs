@@ -1,4 +1,5 @@
 ﻿using JeanStation.Entities;
+using JeanStation.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,7 +16,28 @@ namespace JeanStation.Repository
         {
             _context = new JeanStationContext();
         }
+        public void CreateOrder(Orderdto orderDto)
+        {
+            if (orderDto == null)
+                throw new ArgumentNullException(nameof(orderDto), "Order DTO cannot be null.");
 
+            // Map DTO to Order entity
+            var order = new Order
+            {
+                OrderId = string.IsNullOrEmpty(orderDto.OrderId) ? Guid.NewGuid().ToString() : orderDto.OrderId,
+                CustomerId = orderDto.CustomerId,
+                Amount = orderDto.Amount,
+                OrderStatus = orderDto.OrderStatus ?? "Pending", // Default to "Pending" if not provided
+                PaymentStatus = orderDto.PaymentStatus ?? "Unpaid", // Default to "Unpaid" if not provided
+                OrderDate = orderDto.OrderDate == default ? DateTime.Now : orderDto.OrderDate
+            };
+
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+        }
+
+        
+    
         public void DeleteOrder(string OrderId)
         {
             if (OrderId == null)
@@ -41,42 +63,18 @@ namespace JeanStation.Repository
             return _context.Orders.Include(o => o.CustomerNavigation).FirstOrDefault(o => o.OrderId == OrderId);
         }
 
-        public void OrderCreate(Order order)
+        
+        
+
+        public void OrderUpdateStatus(string OrderId,string orderstatus)
         {
-           
+            if (orderstatus == null)
+                throw new ArgumentNullException(nameof(orderstatus));
 
-            _context.Orders.Add(order);
-
-            _context.SaveChanges();
-        }
-
-        public void OrderUpdatePayment(Order order)
-        {
-            if (order == null)
-                throw new ArgumentNullException(nameof(order));
-
-            var existingOrder = _context.Orders.Find(order.OrderId);
+            var existingOrder = _context.Orders.Find(OrderId);
             if (existingOrder != null)
             {
-                existingOrder.PaymentStatus = order.PaymentStatus;
-                _context.Entry(existingOrder).State = EntityState.Modified;
-                _context.SaveChanges();
-            }
-            else
-            {
-                throw new InvalidOperationException("Order not found");
-            }
-        }
-
-        public void OrderUpdateStatus(Order order)
-        {
-            if (order == null)
-                throw new ArgumentNullException(nameof(order));
-
-            var existingOrder = _context.Orders.Find(order.OrderId);
-            if (existingOrder != null)
-            {
-                existingOrder.OrderStatus = order.OrderStatus;
+                existingOrder.OrderStatus = orderstatus;
                 _context.Entry(existingOrder).State = EntityState.Modified;
                 _context.SaveChanges();
             }

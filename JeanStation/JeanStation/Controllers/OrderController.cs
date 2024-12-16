@@ -1,4 +1,5 @@
 ﻿using JeanStation.Entities;
+using JeanStation.Models;
 using JeanStation.Repository;
 using System;
 using System.Collections.Generic;
@@ -7,58 +8,98 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+
+
 namespace JeanStation.Controllers
 {
-    [RoutePrefix("api/orders")]
+    [RoutePrefix("api/Order")]
     public class OrderController : ApiController
     {
-        private IOrderRepository _orderRepository;
+        private readonly IOrderRepository _orderRepository;
 
         public OrderController()
         {
             _orderRepository = new OrderRepository();
         }
-
-        // GET: api/orders/{id}
-        [HttpGet]
-        [Route("{id}")]
-        public IHttpActionResult GetOrderById(string id)
+        [HttpPost]
+        [Route("CreateOrder")]
+        public IHttpActionResult CreateOrder([FromBody] Orderdto orderDto)
         {
-            if (string.IsNullOrEmpty(id))
-                return BadRequest("Order ID cannot be null or empty.");
+            try
+            {
+                if (orderDto == null)
+                {
+                    return BadRequest("Order data cannot be null.");
+                }
 
-            var order = _orderRepository.GetOrderById(id);
-            if (order == null)
-                return NotFound();
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            return Ok(order);
+                _orderRepository.CreateOrder(orderDto);
+                return Ok("Order created successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
-        // GET: api/orders/customer/{customerId}
+        // Get Order by OrderId
         [HttpGet]
-        [Route("customer/{customerId}")]
+        [Route("GetOrderById/{orderId}")]
+        public IHttpActionResult GetOrderById(string orderId)
+        {
+            try
+            {
+                var order = _orderRepository.GetOrderById(orderId);
+                if (order == null)
+                {
+                    return NotFound();
+                }
+                return Ok(order);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        // Update Order Status
+        [HttpPut]
+        [Route("UpdateOrderStatus")]
+        public IHttpActionResult UpdateOrderStatus(string OrderId,string orderstatus)
+        {
+            try
+            {
+                if (OrderId == null)
+                {
+                    return BadRequest("Order data cannot be null.");
+                }
+
+                _orderRepository.OrderUpdateStatus(OrderId,orderstatus);
+                return Ok("Order status updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        // Get Orders by CustomerId
+        [HttpGet]
+        [Route("GetOrdersByCustomerId/{customerId}")]
         public IHttpActionResult GetOrdersByCustomerId(string customerId)
         {
-            if (string.IsNullOrEmpty(customerId))
-                return BadRequest("Customer ID cannot be null or empty.");
-
-            var orders = _orderRepository.GetOrdersByCustomerId(customerId);
-            return Ok(orders);
-        }
-
-        // POST: api/orders
-        [HttpPost]
-        [Route("Create")]
-        public IHttpActionResult CreateOrder([FromBody] Order order)
-        {
-            if (order == null)
-                return BadRequest("Order data is null");
-
             try
             {
-                _orderRepository.OrderCreate(order);
-                return Ok("Created");
-                //return StatusCode(HttpStatusCode.Created);
+                var orders = _orderRepository.GetOrdersByCustomerId(customerId);
+                if (!orders.Any())
+                {
+                    return NotFound();
+                }
+                return Ok(orders);
             }
             catch (Exception ex)
             {
@@ -66,68 +107,15 @@ namespace JeanStation.Controllers
             }
         }
 
-        // PUT: api/orders/payment
-        [HttpPut]
-        [Route("payment")]
-        public IHttpActionResult UpdateOrderPayment([FromBody] Order order)
-        {
-            if (order == null)
-                return BadRequest("Order data is null.");
-
-            try
-            {
-                _orderRepository.OrderUpdatePayment(order);
-                return Ok();
-            }
-            catch (InvalidOperationException)
-            {
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        // PUT: api/orders/status
-        [HttpPut]
-        [Route("status")]
-        public IHttpActionResult UpdateOrderStatus([FromBody] Order order)
-        {
-            if (order == null)
-                return BadRequest("Order data is null.");
-
-            try
-            {
-                _orderRepository.OrderUpdateStatus(order);
-                return Ok();
-            }
-            catch (InvalidOperationException)
-            {
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        // DELETE: api/orders
+        // Delete an Order
         [HttpDelete]
-        [Route("Delete/{OrderId}")]
-        public IHttpActionResult DeleteOrder(string OrderId)
+        [Route("DeleteOrder/{orderId}")]
+        public IHttpActionResult DeleteOrder(string orderId)
         {
-            if (OrderId == null)
-                return BadRequest("Order data is null.");
-
             try
             {
-                _orderRepository.DeleteOrder(OrderId);
-                return Ok("Deleted");
-            }
-            catch (InvalidOperationException)
-            {
-                return NotFound();
+                _orderRepository.DeleteOrder(orderId);
+                return Ok("Order deleted successfully.");
             }
             catch (Exception ex)
             {
