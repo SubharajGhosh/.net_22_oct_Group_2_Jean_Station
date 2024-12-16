@@ -11,13 +11,13 @@ namespace JeanStation.Repository
     {
         
         void Add(OrderItemdto orderItem);
-        double CalculateCartTotal(string OrderId);
+        //double CalculateCartTotal(string OrderId);
         //IEnumerable<OrderItem> GetByCustomerId(string customerId);
         void Remove(string OrderId);
-        void UpdateQuantity(string orderItemId, int newQuantity);
-        void ClearCart(string OrderId);
+        
+        //
         IEnumerable<OrderItem> GetByOrderId(string orderId);
-        OrderItem GetById(string orderItemId);
+        //OrderItem GetById(string orderItemId);
 
     }
 }

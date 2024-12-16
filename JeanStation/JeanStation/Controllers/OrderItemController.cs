@@ -14,8 +14,8 @@ namespace JeanStation.Controllers
     [RoutePrefix("api/OrderItem")]
     public class OrderItemController : ApiController
     {
-        private IOrderItemInterface _orderItemRepository;
-        private IJeansRepository _jeansRepository;
+        private readonly IOrderItemInterface _orderItemRepository;
+        private readonly IJeansRepository _jeansRepository;
 
         public OrderItemController()
         {
@@ -47,37 +47,37 @@ namespace JeanStation.Controllers
         }
 
         // Update the quantity of an existing OrderItem
-        [HttpPut]
-        [Route("UpdateQuantity")]
-        public IHttpActionResult UpdateQuantity(string orderItemId, int newQuantity)
-        {
-            try
-            {
-                var orderItem = _orderItemRepository.GetById(orderItemId);
-                if (orderItem == null)
-                {
-                    return NotFound();
-                }
+        //[HttpPut]
+        //[Route("UpdateQuantity")]
+        //public IHttpActionResult UpdateQuantity(string orderItemId, int newQuantity)
+        //{
+        //    try
+        //    {
+        //        var orderItem = _orderItemRepository.GetById(orderItemId);
+        //        if (orderItem == null)
+        //        {
+        //            return NotFound();
+        //        }
 
-                var jeans = _jeansRepository.GetById(orderItem.JeansId);
-                if (jeans == null)
-                {
-                    return BadRequest("Invalid product.");
-                }
+        //        var jeans = _jeansRepository.GetById(orderItem.JeansId);
+        //        if (jeans == null)
+        //        {
+        //            return BadRequest("Invalid product.");
+        //        }
 
-                if ((newQuantity - orderItem.Quantity) > jeans.Stock)
-                {
-                    return BadRequest("Insufficient stock for the updated quantity.");
-                }
+        //        if ((newQuantity - orderItem.Quantity) > jeans.Stock)
+        //        {
+        //            return BadRequest("Insufficient stock for the updated quantity.");
+        //        }
 
-                _orderItemRepository.UpdateQuantity(orderItemId, newQuantity);
-                return Ok("Order item quantity updated successfully.");
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+        //        _orderItemRepository.UpdateQuantity(orderItemId, newQuantity);
+        //        return Ok("Order item quantity updated successfully.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return InternalServerError(ex);
+        //    }
+        //}
 
         // Get all OrderItems by OrderId
         [HttpGet]
@@ -100,20 +100,20 @@ namespace JeanStation.Controllers
         }
 
         // Clear all OrderItems with null OrderId
-        [HttpDelete]
-        [Route("ClearNullOrderItems")]
-        public IHttpActionResult ClearNullOrderItems(string OrderId)
-        {
-            try
-            {
-                _orderItemRepository.ClearCart(OrderId);
-                return Ok("All order items with null OrderId have been cleared.");
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+        //[HttpDelete]
+        //[Route("ClearNullOrderItems")]
+        //public IHttpActionResult ClearNullOrderItems(string OrderId)
+        //{
+        //    try
+        //    {
+        //        _orderItemRepository.ClearCart(OrderId);
+        //        return Ok("All order items with null OrderId have been cleared.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return InternalServerError(ex);
+        //    }
+        //}
 
         // Remove an OrderItem
         [HttpDelete]

@@ -17,6 +17,8 @@ namespace JeanStation.Entities
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<PaymentDetails> PaymentDetailss { get; set; }
         public DbSet<Shopkeeper> Shopkeepers { get; set; }
+        public DbSet<Cart> Carts { get; set; }  
+
 
     }
 }

@@ -80,61 +80,61 @@ namespace JeanStation.Repository
         }
 
         // Clear the cart for a specific customer
-        public void ClearCart(string OrderId)
-        {
-            var cartItems = _context.OrderItems.Include("JeanNavigation")
-                                               .Where(o=>o.OrderId == OrderId)
-                                               .ToList();
+        //public void ClearCart(string OrderId)
+        //{
+        //    var cartItems = _context.OrderItems.Include("JeanNavigation")
+        //                                       .Where(o=>o.OrderId == OrderId)
+        //                                       .ToList();
 
-            foreach (var item in cartItems)
-            {
-                if (item.JeanNavigation !=null)
-                {
-                    item.JeanNavigation.Stock += item.Quantity; // Restore stock
-                }
-            }
+        //    foreach (var item in cartItems)
+        //    {
+        //        if (item.JeanNavigation !=null)
+        //        {
+        //            item.JeanNavigation.Stock += item.Quantity; // Restore stock
+        //        }
+        //    }
 
-            _context.OrderItems.RemoveRange(cartItems);
-            _context.SaveChanges();
-        }
+        //    _context.OrderItems.RemoveRange(cartItems);
+        //    _context.SaveChanges();
+        //}
 
         // Update the quantity of an order item (both increasing and decreasing)
-        public void UpdateQuantity(string orderItemId, int newQuantity)
-        {
-            var orderItem = _context.OrderItems.Include("JeanNavigation").FirstOrDefault(o => o.OrderItemId == orderItemId);
-            if (orderItem == null)
-            {
-                throw new InvalidOperationException("Order item not found.");
-            }
+        //public void UpdateQuantity(string orderItemId, int newQuantity)
+        //{
+        //    var orderItem = _context.OrderItems.Include("JeanNavigation").FirstOrDefault(o => o.OrderItemId == orderItemId);
+        //    if (orderItem == null)
+        //    {
+        //        throw new InvalidOperationException("Order item not found.");
+        //    }
 
-            var product = orderItem.JeanNavigation;
-            if (product == null)
-            {
-                throw new InvalidOperationException("Product not found.");
-            }
+        //    var product = orderItem.JeanNavigation;
+        //    if (product == null)
+        //    {
+        //        throw new InvalidOperationException("Product not found.");
+        //    }
 
-            if (newQuantity > orderItem.Quantity)
-            {
-                // If the new quantity is greater, check if enough stock is available
-                if (newQuantity - orderItem.Quantity > product.Stock)
-                {
-                    throw new InvalidOperationException("Insufficient stock for the updated quantity.");
-                }
-                product.Stock -= (newQuantity - orderItem.Quantity); // Deduct stock
-            }
-            else
-            {
-                // If the new quantity is less, restore stock
-                product.Stock += (orderItem.Quantity - newQuantity);
-            }
+        //    if (newQuantity > orderItem.Quantity)
+        //    {
+        //        // If the new quantity is greater, check if enough stock is available
+        //        if (newQuantity - orderItem.Quantity > product.Stock)
+        //        {
+        //            throw new InvalidOperationException("Insufficient stock for the updated quantity.");
+        //        }
+        //        product.Stock -= (newQuantity - orderItem.Quantity); // Deduct stock
+        //    }
+        //    else
+        //    {
+        //        // If the new quantity is less, restore stock
+        //        product.Stock += (orderItem.Quantity - newQuantity);
+        //    }
 
-            // Update order item details
-            orderItem.Quantity = newQuantity;
-            orderItem.TotalPrice = newQuantity * product.Price; // Recalculate price
+        //    // Update order item details
+        //    orderItem.Quantity = newQuantity;
+        //    orderItem.TotalPrice = newQuantity * product.Price; // Recalculate price
 
-            _context.Entry(orderItem).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
+        //    _context.Entry(orderItem).State = EntityState.Modified;
+        //    _context.SaveChanges();
+        //}
 
         // Remove a specific order item
         public void Remove(string orderItemId)
@@ -164,16 +164,16 @@ namespace JeanStation.Repository
         //}
 
         // Calculate the total cost of the cart for a specific customer
-        public double CalculateCartTotal(string OrderId)
-        {
-            return _context.OrderItems.Where(o => o.OrderId == OrderId && o.OrderId == null)
-                                      .Sum(o => o.Quantity * o.UnitPrice);
-        }
-        public OrderItem GetById(string orderItemId)
-        {
-            return _context.OrderItems
-                .Include("JeanNavigation") // Include navigation property if needed
-                .FirstOrDefault(o => o.OrderItemId == orderItemId);
-        }
+        //public double CalculateCartTotal(string OrderId)
+        //{
+        //    return _context.OrderItems.Where(o => o.OrderId == OrderId && o.OrderId == null)
+        //                              .Sum(o => o.Quantity * o.UnitPrice);
+        //}
+        //public OrderItem GetById(string orderItemId)
+        //{
+        //    return _context.OrderItems
+        //        .Include("JeanNavigation") // Include navigation property if needed
+        //        .FirstOrDefault(o => o.OrderItemId == orderItemId);
+        //}
     }
 }

@@ -102,22 +102,20 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
-
-    <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\JeansController.cs" />
     <Compile Include="Controllers\OrderItemController.cs" />
     <Compile Include="Controllers\PaymentDetailsController.cs" />
-
     <Compile Include="Controllers\OrderItemController.cs" />
     <Compile Include="Controllers\PaymentDetailsController.cs" />
     <Compile Include="Controllers\ShopkeeperController.cs" />
     <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\JeansController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-
     <Compile Include="Entities\Brand.cs" />
+    <Compile Include="Entities\Cart.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Jeans.cs" />
     <Compile Include="Entities\JeanStationContext.cs" />
@@ -146,18 +144,18 @@
       <DependentUpon>202412151649028_cdb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-
+    <Compile Include="Models\Cartdto.cs" />
     <Compile Include="Models\Orderdto.cs" />
     <Compile Include="Models\OrderItemdto.cs" />
-
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Orderdto.cs" />
     <Compile Include="Models\OrderItemdto.cs" />
     <Compile Include="Models\ShopkeeperDto.cs" />
     <Compile Include="Models\SignUpModel.cs" />
-
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CartRepository.cs" />
     <Compile Include="Repository\CustomerRepository.cs" />
+    <Compile Include="Repository\ICartRepository.cs" />
     <Compile Include="Repository\ICustomerRepository.cs" />
     <Compile Include="Repository\BrandRepository.cs" />
     <Compile Include="Repository\IBrandRepository.cs" />

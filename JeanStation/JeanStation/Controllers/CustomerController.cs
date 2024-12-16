@@ -12,7 +12,7 @@ namespace JeanStation.Controllers
     [RoutePrefix("api/customers")]
     public class CustomerController : ApiController
     {
-        private ICustomerRepository _customerRepository;
+        private readonly ICustomerRepository _customerRepository;
         public CustomerController()
         {
             _customerRepository = new CustomerRepository();
