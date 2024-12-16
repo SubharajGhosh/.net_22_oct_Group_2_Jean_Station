@@ -2,33 +2,64 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Web;
+using JeanStation.Models;
 
 namespace JeanStation.Repository
 {
     public class ShopkeeperRepository : IShopkeeperRepository
     {
-        private JeanStationContext context1;
+        private JeanStationContext _context;
         public ShopkeeperRepository()
         {
-            context1 = new JeanStationContext();
+            _context = new JeanStationContext();
         }
-        public void AddShopkeeper(Shopkeeper shopkeeper)
+        // Get a shopkeeper by ShopkeeperId
+        public Shopkeeper GetShopkeeperByShopkeeperId(string shopkeeperId)
         {
-            context1.Shopkeepers.Add(shopkeeper);
-            context1.SaveChanges();
+            return _context.Shopkeepers
+                .Include("UserNavigation") // Include UserNavigation for User details
+                .FirstOrDefault(s => s.ShopkeeperId == shopkeeperId);
         }
 
-        //public void UpdateShopkeeper(Shopkeeper shopkeeper)
-        //{
-        //    var obj = context1.Shopkeepers.Find(shopkeeper.ShopkeeperId);
-        //    obj.ShopName=shopkeeper.ShopName;
-
-        //}
-
-        public bool ValidateShopkeeper(Shopkeeper shopkeeper)
+        // Update an existing shopkeeper
+        public Shopkeeper UpdateShopkeeper(ShopkeeperDto shopkeeperDto)
         {
-            return context1.Shopkeepers.Any(x=>x.ShopkeeperId == shopkeeper.ShopkeeperId);
+            var existingShopkeeper = _context.Shopkeepers.FirstOrDefault(s => s.ShopkeeperId == shopkeeperDto.ShopkeeperId);
+            if (existingShopkeeper == null)
+            {
+                throw new InvalidOperationException("Shopkeeper not found.");
+            }
+
+            existingShopkeeper.ShopName = shopkeeperDto.ShopName;
+            existingShopkeeper.Location = shopkeeperDto.Location;
+            existingShopkeeper.Address = shopkeeperDto.Address;
+
+            _context.SaveChanges(); // Commit the update to the database
+            return existingShopkeeper;
         }
+
+        // Delete a shopkeeper
+        public bool DeleteShopkeeper(string shopkeeperId)
+        {
+            var shopkeeper = _context.Shopkeepers.FirstOrDefault(s => s.ShopkeeperId == shopkeeperId);
+            if (shopkeeper == null)
+            {
+                return false;
+            }
+
+            _context.Shopkeepers.Remove(shopkeeper);
+            _context.SaveChanges(); // Commit the deletion to the database
+            return true;
+        }
+        public IEnumerable<Customer> GetAllCustomers()
+        {
+            return _context.Customers
+                .Include("UserNavigation") // Include UserNavigation for User details
+                .ToList();
+        }
+
+
     }
 }

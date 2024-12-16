@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using JeanStation.Repository;
 using JeanStation.Entities;
+using JeanStation.Models;
+using System.Runtime.Remoting.Contexts;
 
 namespace JeanStation.Controllers
 {
@@ -16,12 +18,12 @@ namespace JeanStation.Controllers
         {
             repository = new ShopkeeperRepository();
         }
-        [HttpPost, Route("AddShopkeeper")]
-        public IHttpActionResult Add([FromBody] Shopkeeper shopkeeper)
+        [HttpGet, Route("GetShopkeeperByShopkeeperId/{shopkeeperId}")]
+        public IHttpActionResult GetShopkeeperByShopkeeperId(string shopkeeperId)
         {
             try
             {
-                repository.AddShopkeeper(shopkeeper);
+                var shopkeeper = repository.GetShopkeeperByShopkeeperId(shopkeeperId);
                 return Ok(shopkeeper);
             }
             catch (Exception ex)
@@ -30,33 +32,59 @@ namespace JeanStation.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost,Route("Validate")]
-        public IHttpActionResult ValidateShopkeeper([FromBody] Shopkeeper shopkeeper)
+        [HttpPut, Route("UpdateShopkeeper")]
+        public IHttpActionResult UpdateShopkeeper([FromBody] ShopkeeperDto shopkeeperDto)
         {
-            if (shopkeeper == null)
-            {
-                return BadRequest("Shopkeeper cannot be null.");
-            }
-
             try
             {
-                bool isValid = repository.ValidateShopkeeper(shopkeeper); // Call to repository method
-
-                if (isValid)
-                {
-                    return Ok("Shopkeeper exists.");
-                }
-                else
-                {
-                    return NotFound();
-                }
+                repository.UpdateShopkeeper(shopkeeperDto);
+                return Ok(shopkeeperDto);
             }
             catch (Exception ex)
             {
-                // Log the error (optional) and return a generic error message
+
                 return BadRequest(ex.Message);
             }
         }
+        [HttpDelete]
+        [Route("DeleteShopkeeper/{shopkeeperId}")]
+        public IHttpActionResult DeleteShopkeeper(string shopkeeperId)
+        {
+            if (shopkeeperId == null)
+                return BadRequest("Shopkeeper data is null.");
+
+            try
+            {
+                repository.DeleteShopkeeper(shopkeeperId);
+                return Ok("Deleted");
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [HttpGet]
+        [Route("GetAllCustomers")]
+        public IHttpActionResult GetAllCustomers()
+        {
+            try
+            {
+                var customers = repository.GetAllCustomers();
+                return Ok(customers);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
 
     }
 }

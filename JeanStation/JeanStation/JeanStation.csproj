@@ -121,6 +121,7 @@
       <DependentUpon>202412120439259_JeanDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ShopkeeperDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IOrderRepository.cs" />
     <Compile Include="Repository\IShopkeeperRepository.cs" />
@@ -139,7 +140,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202412120439259_JeanDb.resx">
