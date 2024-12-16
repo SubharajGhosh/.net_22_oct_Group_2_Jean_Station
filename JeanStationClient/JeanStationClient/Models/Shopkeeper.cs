@@ -7,6 +7,5 @@ namespace JeanStationClient.Models
 {
     public class Shopkeeper
     {
-
     }
 }
