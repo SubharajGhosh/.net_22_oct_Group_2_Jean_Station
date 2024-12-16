@@ -21,9 +21,9 @@ namespace JeanStation.Repository
 
 
         // Browse jeans available in the store
-        IEnumerable<Jeans> BrowseJeans();
+        //IEnumerable<Jeans> BrowseJeans();
 
-        IEnumerable<OrderItem> ViewCart(string customerId);
+        //IEnumerable<OrderItem> ViewCart(string customerId);
         
 
     }
