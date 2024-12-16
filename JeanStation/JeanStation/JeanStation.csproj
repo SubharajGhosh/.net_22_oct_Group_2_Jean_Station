@@ -102,15 +102,13 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
-
     <Compile Include="Controllers\ShopkeeperController.cs" />
-
     <Compile Include="Controllers\PaymentDetailsRepository.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\JeansController.cs" />
-
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Entities\Brand.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Jeans.cs" />
@@ -128,30 +126,27 @@
       <DependentUpon>202412120439259_JeanDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ShopkeeperDto.cs" />
+    <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CustomerRepository.cs" />
     <Compile Include="Repository\ICustomerRepository.cs" />
     <Compile Include="Repository\IOrderRepository.cs" />
-
     <Compile Include="Repository\BrandRepository.cs" />
     <Compile Include="Repository\IBrandRepository.cs" />
     <Compile Include="Repository\IJeansRepository.cs" />
     <Compile Include="Repository\IPaymentDetailsRepository.cs" />
-
     <Compile Include="Repository\IShopkeeperRepository.cs" />
-    <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IOrderItemInterface.cs" />
+    <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\OrderItemRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
-
     <Compile Include="Repository\ShopkeeperRepository.cs" />
-
     <Compile Include="Repository\PaymentDetailsRepository.cs" />
     <Compile Include="Repository\ShopkeeperRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\JeansRepository.cs" />
-
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

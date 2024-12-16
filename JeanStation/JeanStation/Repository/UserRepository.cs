@@ -4,146 +4,73 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Text.RegularExpressions;
-
+using JeanStation.Models;
 namespace JeanStation.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private  JeanStationContext _context;
+        private readonly JeanStationContext _context;
 
         public UserRepository()
         {
             _context = new JeanStationContext();
         }
-        public bool SignUpCustomer(string username, string password, string customerName, string email, string phoneNumber, string address)
+        public string Login(string username, string password)
         {
-            // Ensure username is unique
-            if (_context.Users.Any(u => u.UserName == username))
+            var user = _context.Users.FirstOrDefault(u => u.UserName == username && u.Password == password);
+            if (user == null)
             {
-                return false;
+                return "Invalid credentials"; // Invalid login
+            }
+            return user.Role;
+        }
+
+        public bool SignUpUser(SignUpModel model)
+        {
+            if (_context.Users.Any(u => u.UserName == model.UserName))
+            {
+                return false; // Username already exists
             }
 
             // Create user entry
             var user = new User
             {
                 UserId = Guid.NewGuid().ToString(),
-                UserName = username,
-                Password = password,
-                Role = "Customer" // Default role
+                UserName = model.UserName,
+                Password = model.Password,  // Store the password as plain text for simplicity, ideally hash it
+                Role = model.Role,
             };
             _context.Users.Add(user);
 
-            // Create customer entry
-            var customer = new Customer
+            // Create customer or shopkeeper based on the role
+            if (model.Role == "Customer")
             {
-                CustomerId = Guid.NewGuid().ToString(), // Generate unique CustomerId
-                CustomerName = customerName,
-                Email = email,
-                PhoneNumber = phoneNumber,
-                Address = address,
-                UserId = user.UserId
-            };
-            _context.Customers.Add(customer);
-
-            return true;
-        }
-
-
-        public bool DeleteUser(string userId)
-        {
-            var user = _context.Users.Find(userId);
-
-            // If the user does not exist, throw an exception
-            if (user == null)
-            {
-                throw new InvalidOperationException("User not found.");
+                var customer = new Customer
+                {
+                    CustomerId = Guid.NewGuid().ToString(),
+                    CustomerName = model.CustomerName,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    Address = model.Address,
+                    UserId = user.UserId
+                };
+                _context.Customers.Add(customer);
             }
-            else if(user.Role=="Customer")
+            else if (model.Role == "Shopkeeper")
             {
-                _context.Users.Remove(user);
-
-                // Save changes to the database to persist the deletion
-                _context.SaveChanges();
-
-            }
-            // Remove the user from the Users DbSet
-            
-
-            // Return true to indicate the user was successfully deleted
-            return true;
-        }
-
-        public List<User> GetAllUsers()
-        {
-            return _context.Users.ToList();
-        }
-
-        public User GetUserById(string userId)
-        {
-            return _context.Users.FirstOrDefault(u => u.UserId == userId);
-        }
-
-        public bool UpdateUser(User user)
-        {
-            var existingUser = _context.Users.FirstOrDefault(u => u.UserId == user.UserId);
-
-            // If the user does not exist, throw an exception
-            if (existingUser == null)
-            {
-                throw new InvalidOperationException("User not found.");
+                var shopkeeper = new Shopkeeper
+                {
+                    ShopkeeperId = Guid.NewGuid().ToString(),
+                    Address = model.Address,
+                    UserId = user.UserId
+                };
+                _context.Shopkeepers.Add(shopkeeper);
             }
 
-            // Update the properties of the existing user with the values from the provided user object
-            //existingUser.UserName = user.UserName;
-            existingUser.Password = user.Password;
-            //existingUser.Role = user.Role;
-
-            // Optionally, validate the updated user
-            ValidateUser(existingUser);
-
-            // Save changes to the database to persist the updates
+            // Commit the transaction to save to the database
             _context.SaveChanges();
-
-            // Return true to indicate the user was successfully updated
             return true;
         }
 
-        public bool ValidateUser(User user)
-        {
-            if (user == null)
-            {
-                throw new ArgumentException("User cannot be null.");
-            }
-
-            if (string.IsNullOrEmpty(user.UserId) || string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.Password))
-            {
-                throw new ArgumentException("UserId, UserName, and Password are required.");
-            }
-
-            // Validate password (must contain uppercase, lowercase, numeric, and special characters)
-            if (!Regex.IsMatch(user.Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"))
-            {
-                throw new ArgumentException("Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.");
-            }
-
-            return true;
         }
-        public string Login(string username, string password)
-        {
-            var user = _context.Users.FirstOrDefault(u => u.UserName == username && u.Password == password);
-
-            if (user == null)
-            {
-                return "Invalid credentials";
-            }
-
-            return user.Role; // Return the role (Customer or Shopkeeper)
-        }
-
-        public bool UserExists(string username)
-        {
-            return _context.Users.Any(u => u.UserName == username);
-        }
-
-    }
 }

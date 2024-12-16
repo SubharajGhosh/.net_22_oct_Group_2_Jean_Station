@@ -6,7 +6,7 @@ using System.Web;
 
 namespace JeanStation.Repository
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         JeanStationContext _context;
         public CustomerRepository()
@@ -56,11 +56,11 @@ namespace JeanStation.Repository
         }
 
         // Browse jeans available in the store
-        public IEnumerable<Jeans> BrowseJeans()
-        {
-            return _context.Jeans.ToList();
-        }
-       
+        //public IEnumerable<Jeans> BrowseJeans()
+        //{
+        //    return _context.Jeans.ToList();
+        //}
+
 
     }
 }
