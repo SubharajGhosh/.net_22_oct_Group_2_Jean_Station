@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JeanStation.Entities;
+using JeanStation.Models;
 namespace JeanStation.Repository
 {
     internal interface IOrderRepository
     {
-     void OrderCreate(Order order);
-     void OrderUpdateStatus(Order order);
+        void CreateOrder(Orderdto orderDto);
+     void OrderUpdateStatus(string OrderId,string orderstatus);
      void DeleteOrder(string OrderId);
      Order GetOrderById(string OrderId);
-     void OrderUpdatePayment(Order order);
      List<Order> GetOrdersByCustomerId(string customerId);
     }
 }
