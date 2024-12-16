@@ -143,6 +143,10 @@
     <Compile Include="Migrations\202412151649028_cdb.Designer.cs">
       <DependentUpon>202412151649028_cdb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202412160909572_cart.cs" />
+    <Compile Include="Migrations\202412160909572_cart.Designer.cs">
+      <DependentUpon>202412160909572_cart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cartdto.cs" />
     <Compile Include="Models\Orderdto.cs" />
@@ -197,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202412151649028_cdb.resx">
       <DependentUpon>202412151649028_cdb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412160909572_cart.resx">
+      <DependentUpon>202412160909572_cart.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
