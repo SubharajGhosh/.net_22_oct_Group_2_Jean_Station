@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using JeanStation.Models;
+using System.Runtime.Remoting.Contexts;
 namespace JeanStation.Repository
 {
     public class CartRepository : ICartRepository
     {
 
         private readonly JeanStationContext _context;
-
+      
         public CartRepository()
         {
             _context = new JeanStationContext();
@@ -22,13 +23,17 @@ namespace JeanStation.Repository
             if (cart == null)
                 throw new ArgumentNullException(nameof(cart));
 
+            var customer = _context.Customers.Find(cart.CustomerId);
+            var jeans = _context.Jeans.Find(cart.JeansId);
             var cartEntity = new Cart
             {
                 CartId = cart.CartId,
                 JeansId = cart.JeansId,
                 Price = cart.Price,
                 CustomerId = cart.CustomerId,
-                Quantity = cart.Quantity
+                Quantity = cart.Quantity,
+
+               
             };
 
             _context.Carts.Add(cartEntity);
@@ -37,14 +42,28 @@ namespace JeanStation.Repository
 
 
         // Retrieves all cart items for a specific customer
-        public List<Cart> GetCartItems(string customerId)
+        public List<Cartdto> GetCartItems(string customerId)
         {
             if (string.IsNullOrWhiteSpace(customerId))
                 throw new ArgumentException("Customer ID cannot be null or empty", nameof(customerId));
 
-            return _context.Carts.Where(c => c.CustomerId == customerId).ToList();
+            // Fetch cart items and map them to CartDTO
+            var cartItems = _context.Carts
+                                   .Where(c => c.CustomerId == customerId)
+                                   .Select(c => new Cartdto
+                                   {
+                                       CartId = c.CartId,
+                                       JeansId = c.JeansId,
+                                       Price = c.Price,
+                                       Quantity = c.Quantity,
+                                       CustomerId = c.CustomerId
+                                       // Map additional properties as needed
+                                   })
+                                   .ToList(); // Returns a list of CartDTO
 
+            return cartItems;
         }
+
 
         // Removes a specific cart item based on CartId
         public void RemoveCartItem(string cartId)
@@ -70,7 +89,7 @@ namespace JeanStation.Repository
             if (existingCart != null)
             {
                 //existingCart.JeansId = cart.JeansId;
-                existingCart.Price = cart.Price;
+                //existingCart.Price = cart.Price;
                 existingCart.Quantity = cart.Quantity;
                 _context.SaveChanges();
             }
@@ -89,6 +108,25 @@ namespace JeanStation.Repository
                 _context.SaveChanges();
             }
         }
+        public bool UpdateQuantity(string cartId, int newQuantity)
+        {
+            // Find the cart item by its ID
+            var cartItem = _context.Carts.FirstOrDefault(c => c.CartId == cartId);
+
+            if (cartItem == null)
+            {
+                return false; // Cart item does not exist
+            }
+
+            // Update the quantity
+            cartItem.Quantity = newQuantity;
+
+            // Save changes to the database
+            _context.SaveChanges();
+
+            return true; // Quantity updated successfully
+        }
+
     }
 }
 

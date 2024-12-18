@@ -1,9 +1,11 @@
 ﻿using JeanStation.Entities;
+using JeanStation.Migrations;
 using JeanStation.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Web;
 
 namespace JeanStation.Repository
@@ -20,7 +22,7 @@ namespace JeanStation.Repository
         {
             if (orderDto == null)
                 throw new ArgumentNullException(nameof(orderDto), "Order DTO cannot be null.");
-
+            var customer = _context.Customers.Find(orderDto.CustomerId);
             // Map DTO to Order entity
             var order = new Order
             {
@@ -29,7 +31,8 @@ namespace JeanStation.Repository
                 Amount = orderDto.Amount,
                 OrderStatus = orderDto.OrderStatus ?? "Pending", // Default to "Pending" if not provided
                 PaymentStatus = orderDto.PaymentStatus ?? "Unpaid", // Default to "Unpaid" if not provided
-                OrderDate = orderDto.OrderDate == default ? DateTime.Now : orderDto.OrderDate
+                OrderDate = orderDto.OrderDate == default ? DateTime.Now : orderDto.OrderDate,
+                
             };
 
             _context.Orders.Add(order);
@@ -55,16 +58,34 @@ namespace JeanStation.Repository
             }
         }
 
-        public Order GetOrderById(string OrderId)
+        public Orderdto GetOrderById(string orderId)
         {
-            if (string.IsNullOrEmpty(OrderId))
-                throw new ArgumentException("OrderId cannot be null or empty", nameof(OrderId));
+            if (string.IsNullOrEmpty(orderId))
+                throw new ArgumentException("OrderId cannot be null or empty", nameof(orderId));
 
-            return _context.Orders.Include(o => o.CustomerNavigation).FirstOrDefault(o => o.OrderId == OrderId);
+            // Fetch the order and map it to OrderDTO
+            var order = _context.Orders
+                                .Include(o => o.CustomerNavigation) // Include related CustomerNavigation if necessary
+                                .Where(o => o.OrderId == orderId)
+                                .Select(o => new Orderdto
+                                {
+                                    OrderId = o.OrderId,
+                                    CustomerId = o.CustomerId,
+                                    OrderDate = o.OrderDate,
+                                    Amount = o.Amount,
+                                    OrderStatus = o.OrderStatus,
+                                    PaymentStatus = o.PaymentStatus,
+                                    City = o.City,
+                                    Address = o.Address,
+                                    // You can add more properties or map them from related entities
+                                })
+                                .FirstOrDefault(); // Returns the first matched order or null
+
+            return order;
         }
 
-        
-        
+
+
 
         public void OrderUpdateStatus(string OrderId,string orderstatus)
         {
@@ -83,15 +104,32 @@ namespace JeanStation.Repository
                 throw new InvalidOperationException("Order not found");
             }
         }
-        public List<Order> GetOrdersByCustomerId(string customerId)
+        public List<Orderdto> GetOrdersByCustomerId(string customerId)
         {
             if (string.IsNullOrEmpty(customerId))
                 throw new ArgumentException("CustomerId cannot be null or empty", nameof(customerId));
 
-            return _context.Orders.Include(o => o.CustomerNavigation)
-                                  .Where(o => o.CustomerId == customerId)
-                                  .ToList();
+            // Fetch orders and map them to OrderDTO
+            var orders = _context.Orders
+                                 .Include(o => o.CustomerNavigation) // Include related CustomerNavigation if needed
+                                 .Where(o => o.CustomerId == customerId)
+                                 .Select(o => new Orderdto
+                                 {
+                                     OrderId = o.OrderId,
+                                     CustomerId = o.CustomerId,
+                                     OrderDate = o.OrderDate,
+                                     Amount = o.Amount, // Adjust if needed based on your Order entity
+                                     OrderStatus = o.OrderStatus,
+                                     PaymentStatus = o.PaymentStatus,
+                                     City = o.City,
+                                     Address = o.Address
+                                     
+                                 })
+                                 .ToList();
+
+            return orders;
         }
+
 
     }
 }

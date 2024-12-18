@@ -1,0 +1,31 @@
+﻿@model IEnumerable<JeanStationAPP.Models.Customer>
+
+@{
+    ViewBag.Title = "All Customers";
+}
+
+<h2>All Customers</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Customer Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.CustomerName</td>
+                <td>@customer.Email</td>
+                <td>@customer.PhoneNumber</td>
+                <td>@customer.Address</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Back to Dashboard", "SDashboard", "Shopkeeper", null, new { @class = "btn btn-secondary" })

@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace JeanStation.Controllers
 {
+    [RoutePrefix("api/User")]
     public class UserController : ApiController
     {
        
@@ -55,14 +56,11 @@ namespace JeanStation.Controllers
                 }
 
                 // Call the login method from UserRepository
-                string role = _userRepository.Login(model.UserName, model.Password);
+                LoginModelObject role = _userRepository.Login(model);
 
-                if (role == "Invalid credentials")
-                {
-                    return Unauthorized(); // Unauthorized error if credentials are invalid
-                }
+                
 
-                return Ok(new { Role = role }); // Return the user's role (Customer or Shopkeeper)
+                return Ok(role); // Return the user's role (Customer or Shopkeeper)
             
         }
     }

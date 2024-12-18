@@ -1,0 +1,54 @@
+﻿@model JeanStationAPP.Models.Jeans
+
+@{
+    ViewBag.Title = "Jeans Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Jeans Details</h2>
+
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <!-- Image Section -->
+                <img src="@Model.ImageUrl" class="img-fluid rounded-start" alt="Jeans Image">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h4 class="card-title"> @Model.Type</h4>
+                    <hr />
+                    <dl class="row">
+
+
+                        <dt class="col-sm-4">Type:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Type)</dd>
+
+                        <dt class="col-sm-4">Color:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Color)</dd>
+
+                        <dt class="col-sm-4">Size:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Size)</dd>
+
+                        <dt class="col-sm-4">Stock:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Stock)</dd>
+
+                        <dt class="col-sm-4">Price:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Price)</dd>
+
+
+                        <form method="post" action="@Url.Action("AddToCart", "Cart")">
+                            <input type="hidden" name="JeansId" value="@Model.JeansId" />
+                            <button type="submit" class="btn btn-success btn-sm">Add to Cart</button>
+                        </form>
+                    </dl>
+                    <div class="d-flex justify-content-between">
+                        <p>
+                            @Html.ActionLink("Back to List", "BrowseAllJeans", null, new { @class = "btn btn-secondary" })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

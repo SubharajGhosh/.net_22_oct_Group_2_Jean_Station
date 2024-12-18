@@ -10,7 +10,7 @@ using JeanStation.Entities;
 
 namespace JeanStation.Controllers
 {
-    [RoutePrefix("api/cart")]
+    [RoutePrefix("api/Cart")]
     public class CartController : ApiController
     {
         private readonly ICartRepository _cartRepository;
@@ -113,6 +113,17 @@ namespace JeanStation.Controllers
             {
                 return InternalServerError(ex);
             }
+        }
+        [HttpPut]
+        [Route("update-quantity")]
+        public IHttpActionResult UpdateQuantity(string CartId,int Quantity)
+        {
+            var success = _cartRepository.UpdateQuantity(CartId,Quantity);
+            if (!success)
+            {
+                return BadRequest("Unable to update quantity. Ensure the cart item exists and sufficient stock is available.");
+            }
+            return Ok("Quantity updated successfully.");
         }
     }
 }

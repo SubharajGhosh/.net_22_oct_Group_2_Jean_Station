@@ -8,6 +8,8 @@ namespace JeanStation.Entities
 {
     public class Order
     {
+        internal double totalPrice;
+
         [Key]
         public string OrderId {  get; set; }
         [ForeignKey("CustomerNavigation")]

@@ -15,14 +15,20 @@ namespace JeanStation.Repository
         {
             _context = new JeanStationContext();
         }
-        public string Login(string username, string password)
+        public LoginModelObject Login(LoginModel loginmodel)
         {
-            var user = _context.Users.FirstOrDefault(u => u.UserName == username && u.Password == password);
-            if (user == null)
+            var user = _context.Users.FirstOrDefault(u => u.UserName == loginmodel.UserName && u.Password == loginmodel.Password);
+           
+            var userId = _context.Users
+                            .Where(u => u.UserName == loginmodel.UserName)
+                            .Select(u => u.UserId)
+                            .FirstOrDefault();
+            var obj = new LoginModelObject
             {
-                return "Invalid credentials"; // Invalid login
-            }
-            return user.Role;
+                Role = loginmodel.Role,
+                UserId = userId
+            };
+            return obj;
         }
 
         public bool SignUpUser(SignUpModel model)
@@ -35,7 +41,7 @@ namespace JeanStation.Repository
             // Create user entry
             var user = new User
             {
-                UserId = Guid.NewGuid().ToString(),
+                UserId = model.UserId,
                 UserName = model.UserName,
                 Password = model.Password,  // Store the password as plain text for simplicity, ideally hash it
                 Role = model.Role,
@@ -47,7 +53,7 @@ namespace JeanStation.Repository
             {
                 var customer = new Customer
                 {
-                    CustomerId = Guid.NewGuid().ToString(),
+                    CustomerId = model.CustomerId,
                     CustomerName = model.CustomerName,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,

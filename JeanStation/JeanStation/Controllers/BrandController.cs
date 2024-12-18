@@ -9,6 +9,7 @@ using JeanStation.Repository;
 
 namespace JeanStation.Controllers
 {
+    [RoutePrefix("api/Brand")]
     public class BrandController : ApiController
     {
         private BrandRepository brandRepository { get; set; }

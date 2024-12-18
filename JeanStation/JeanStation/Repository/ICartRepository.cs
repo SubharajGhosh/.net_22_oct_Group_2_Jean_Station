@@ -10,10 +10,11 @@ namespace JeanStation.Repository
     internal interface ICartRepository
     {
         void AddToCart(Cartdto cart);
-        List<Cart> GetCartItems(string customerId);
+        List<Cartdto> GetCartItems(string customerId);
         void RemoveCartItem(string cartId);
         void EditCartItem(Cartdto cart);
         //void UpdateQuantity(string cartId, int newQuantity);
         void ClearCart(string customerId);
+        bool UpdateQuantity(string cartId, int newQuantity);
     }
 }

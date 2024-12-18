@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
-
+using JeanStation.Models;
 namespace JeanStation.Repository
 {
     public class PaymentDetailsRepository : IPaymentDetailsRepository
@@ -37,6 +37,7 @@ namespace JeanStation.Repository
             double totalPrice = orderItems.Sum(item => item.Quantity * item.UnitPrice);
 
             // Update the order details
+        
             order.Amount = totalPrice;
             order.OrderStatus = "Pending"; // Set order status
             order.PaymentStatus = "Unpaid"; // Initially unpaid
@@ -47,15 +48,17 @@ namespace JeanStation.Repository
 
             // Save changes to the order and associated items
             _context.SaveChanges();
-
+            Random random = new Random();
+            string PaymentorderId1 = $"PID-{DateTime.Now:yyyyMMdd}-{random.Next(1000, 9999)}";
             // Create payment details and associate it with the existing order
             var paymentDetails = new PaymentDetails
             {
-                PaymentId = Guid.NewGuid().ToString(),
+                PaymentId = PaymentorderId1,
                 OrderId = order.OrderId,
                 PaymentMode = paymentMode,
                 PaymentStatus = "Completed", // Mark as completed upon payment
                 PaymentDate = DateTime.Now,
+                TotalAmount=totalPrice,
                 OrderNavigation = order
             };
 
@@ -72,11 +75,29 @@ namespace JeanStation.Repository
             return paymentDetails;
         }
 
-        public IEnumerable<PaymentDetails> GetPaymentByOrderId(string orderId)
+        public IEnumerable<PaymentDetailsdto> GetPaymentByOrderId(string orderId)
         {
-            return _context.PaymentDetailss.Include(p => p.OrderNavigation)
-                                           .Where(p => p.OrderId == orderId)
-                                           .ToList();
+            if (string.IsNullOrEmpty(orderId))
+                throw new ArgumentException("OrderId cannot be null or empty", nameof(orderId));
+
+            // Fetch payment details and map them to PaymentDetailsDTO
+            var paymentDetails = _context.PaymentDetailss
+                                         .Include(p => p.OrderNavigation) // Include related OrderNavigation if needed
+                                         .Where(p => p.OrderId == orderId)
+                                         .Select(p => new PaymentDetailsdto
+                                         {
+                                             PaymentId = p.PaymentId,
+                                             OrderId = p.OrderId,
+                                             PaymentDate = p.PaymentDate,
+                                             TotalAmount = p.TotalAmount,
+                                             PaymentMode = p.PaymentMode,
+                                             PaymentStatus = p.PaymentStatus,
+                                             // Add additional properties if needed
+                                         })
+                                         .ToList(); // Returns a list of PaymentDetailsDTO
+
+            return paymentDetails;
         }
+
     }
 }

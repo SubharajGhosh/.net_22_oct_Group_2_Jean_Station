@@ -147,13 +147,32 @@
     <Compile Include="Migrations\202412160909572_cart.Designer.cs">
       <DependentUpon>202412160909572_cart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202412170915486_cart1.cs" />
+    <Compile Include="Migrations\202412170915486_cart1.Designer.cs">
+      <DependentUpon>202412170915486_cart1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412170925069_gettte.cs" />
+    <Compile Include="Migrations\202412170925069_gettte.Designer.cs">
+      <DependentUpon>202412170925069_gettte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412170943117_hddf.cs" />
+    <Compile Include="Migrations\202412170943117_hddf.Designer.cs">
+      <DependentUpon>202412170943117_hddf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412180921103_final.cs" />
+    <Compile Include="Migrations\202412180921103_final.Designer.cs">
+      <DependentUpon>202412180921103_final.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cartdto.cs" />
+    <Compile Include="Models\JeansDto.cs" />
+    <Compile Include="Models\LoginModelObject.cs" />
     <Compile Include="Models\Orderdto.cs" />
     <Compile Include="Models\OrderItemdto.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Orderdto.cs" />
     <Compile Include="Models\OrderItemdto.cs" />
+    <Compile Include="Models\PaymentDetailsdto.cs" />
     <Compile Include="Models\ShopkeeperDto.cs" />
     <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -204,6 +223,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202412160909572_cart.resx">
       <DependentUpon>202412160909572_cart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412170915486_cart1.resx">
+      <DependentUpon>202412170915486_cart1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412170925069_gettte.resx">
+      <DependentUpon>202412170925069_gettte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412170943117_hddf.resx">
+      <DependentUpon>202412170943117_hddf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412180921103_final.resx">
+      <DependentUpon>202412180921103_final.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

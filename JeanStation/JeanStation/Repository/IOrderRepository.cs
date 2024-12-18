@@ -12,7 +12,7 @@ namespace JeanStation.Repository
         void CreateOrder(Orderdto orderDto);
      void OrderUpdateStatus(string OrderId,string orderstatus);
      void DeleteOrder(string OrderId);
-     Order GetOrderById(string OrderId);
-     List<Order> GetOrdersByCustomerId(string customerId);
+     Orderdto GetOrderById(string OrderId);
+     List<Orderdto> GetOrdersByCustomerId(string customerId);
     }
 }

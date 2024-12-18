@@ -13,12 +13,14 @@ namespace JeanStation.Repository
         {
             _context = new JeanStationContext();
         }
-        public Customer GetCustomerByCustomerId(string customerId)
+        public Customer GetCustomerByUserId(string userId)
         {
+            // Fetch the customer object using the userId
             return _context.Customers
-                .Include("UserNavigation") // Include UserNavigation for User details
-                .FirstOrDefault(c => c.CustomerId == customerId);
+                .Include("UserNavigation") // Include related User details
+                .FirstOrDefault(c => c.UserId == userId);
         }
+
 
         // Update an existing customer
         // Update an existing customer

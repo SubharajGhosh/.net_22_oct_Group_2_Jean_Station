@@ -1,0 +1,65 @@
+﻿@model IEnumerable<JeanStationAPP.Models.Jeans>
+
+@{
+    ViewBag.Title = "Jeans Search Results";
+}
+
+<h2>Jeans Search Results</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Type</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Image</th>
+            <th>Action</th> <!-- Column for Add to Cart button -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var jean in Model)
+        {
+            <tr>
+                <td>@jean.BrandName</td>
+                <td>@jean.Type</td>
+                <td>@jean.Color</td>
+                <td>@jean.Size</td>
+                <td>@jean.Price</td>
+                <td>@jean.Stock</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(jean.ImageUrl))
+                    {
+                        <!-- Increased Image Size -->
+                        <img src="@jean.ImageUrl" alt="Jeans Image" style="width: 150px; height: auto;" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td>
+                    <!-- Add to Cart Button -->
+                    <form method="post" action="@Url.Action("AddToCart", "Cart")">
+                        <input type="hidden" name="JeansId" value="@jean.JeansId" />
+                        <button type="submit" class="btn btn-success btn-sm">Add to Cart</button>
+                    </form>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<p>
+    @Html.ActionLink("Back to List", "BrowseAllJeans")
+</p>

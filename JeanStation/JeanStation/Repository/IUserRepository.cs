@@ -10,7 +10,7 @@ namespace JeanStation.Repository
     {
         
             bool SignUpUser(SignUpModel model);
-            string Login(string username, string password);
+            LoginModelObject Login(LoginModel login);
         
     }
 }

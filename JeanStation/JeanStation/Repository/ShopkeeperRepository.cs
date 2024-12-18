@@ -16,11 +16,11 @@ namespace JeanStation.Repository
             _context = new JeanStationContext();
         }
         // Get a shopkeeper by ShopkeeperId
-        public Shopkeeper GetShopkeeperByShopkeeperId(string shopkeeperId)
+        public Shopkeeper GetShopkeeperByUserId(string UserId)
         {
             return _context.Shopkeepers
                 .Include("UserNavigation") // Include UserNavigation for User details
-                .FirstOrDefault(s => s.ShopkeeperId == shopkeeperId);
+                .FirstOrDefault(s => s.UserId == UserId);
         }
 
         // Update an existing shopkeeper

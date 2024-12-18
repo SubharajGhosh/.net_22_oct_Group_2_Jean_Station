@@ -1,0 +1,40 @@
+﻿@model JeanStationAPP.Models.Order
+
+@{
+    ViewBag.Title = "Order Details";
+}
+
+<h2>Order Details</h2>
+
+<div class="card">
+    <div class="card-header">
+        <h4>Order ID: @Model.OrderId</h4>
+    </div>
+    <div class="card-body">
+        <p><strong>Order Date:</strong> @Model.OrderDate</p>
+        <p><strong>Order Status:</strong> @Model.OrderStatus</p>
+        <p><strong>Payment Status:</strong> @Model.PaymentStatus</p>
+        <p><strong>Total Amount:</strong> $@Model.Amount</p>
+        <p><strong>Customer ID:</strong> @Model.CustomerId</p>
+        <p><strong>City:</strong> @Model.City</p>
+        <p><strong>Address:</strong> @Model.Address</p>
+    </div>
+</div>
+
+<h3>Update Order Status</h3>
+<form method="post" action="@Url.Action("UpdateOrder", "Order")">
+    <input type="hidden" name="orderId" value="@Model.OrderId" />
+
+    <div class="form-group">
+        <label for="OrderStatus">Order Status</label>
+        <select class="form-control" name="OrderStatus">
+            <option value="Pending" @(Model.OrderStatus == "Pending" ? "selected" : "")>Pending</option>
+            <option value="Completed" @(Model.OrderStatus == "Completed" ? "selected" : "")>Completed</option>
+            <option value="Shipped" @(Model.OrderStatus == "Shipped" ? "selected" : "")>Shipped</option>
+            <option value="Cancelled" @(Model.OrderStatus == "Cancelled" ? "selected" : "")>Cancelled</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Status</button>
+</form>
+
+<a href="@Url.Action("Index", "Order", new { customerId = Model.CustomerId })" class="btn btn-secondary mt-3">Back to Orders</a>

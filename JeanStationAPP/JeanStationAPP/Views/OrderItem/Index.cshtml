@@ -1,0 +1,61 @@
+﻿@model List<JeanStationAPP.Models.OrderItem>
+
+@{
+    ViewBag.Title = "Order Items";
+}
+
+<h2>Order Items for Order @Request.QueryString["orderId"]</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order Item ID</th>
+                <th>Jeans ID</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.OrderItemId</td>
+                    <td>@item.JeansId</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@(item.Quantity * item.UnitPrice)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No order items found for this order.</p>
+}
+
+<h3>Add Order Items</h3>
+<form method="post" action="@Url.Action("AddOrderItems", "OrderItem")">
+    <input type="hidden" name="customerId" value="@Request.QueryString["customerId"]" />
+
+    <!-- Add form fields for each Cart item -->
+    <div class="form-group">
+        <label for="jeansId">Jeans ID</label>
+        <input type="text" class="form-control" id="jeansId" name="jeansId" required />
+    </div>
+
+    <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" required />
+    </div>
+
+    <div class="form-group">
+        <label for="unitPrice">Unit Price</label>
+        <input type="number" class="form-control" id="unitPrice" name="unitPrice" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Order Item</button>
+</form>

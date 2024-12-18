@@ -118,13 +118,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig2.cs" />
+    <Compile Include="App_Start\BundleConfig3.cs" />
+    <Compile Include="App_Start\BundleConfig4.cs" />
+    <Compile Include="App_Start\BundleConfig5.cs" />
+    <Compile Include="App_Start\BundleConfig6.cs" />
+    <Compile Include="App_Start\BundleConfig7.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JeansController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrderItemController.cs" />
+    <Compile Include="Controllers\PaymentDetailsController.cs" />
+    <Compile Include="Controllers\ShopkeeperController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Jeans.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\LoginModelObject.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderItem.cs" />
+    <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Models\Shopkeeper.cs" />
+    <Compile Include="Models\SignUpModel.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,9 +202,33 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\PaymentDetails\Details.cshtml" />
+    <Content Include="Views\OrderItem\Index.cshtml" />
+    <Content Include="Views\OrderItem\erroe.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\Details.cshtml" />
+    <Content Include="Views\Order\error.cshtml" />
+    <Content Include="Views\PaymentDetails\PaymentGateway.cshtml" />
+    <Content Include="Views\User\SignUp.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Customer\Details.cshtml" />
+    <Content Include="Views\Customer\Dashboard.cshtml" />
+    <Content Include="Views\Shopkeeper\SDashboard.cshtml" />
+    <Content Include="Views\Shopkeeper\EditShopkeeper.cshtml" />
+    <Content Include="Views\Shopkeeper\AllCustomers.cshtml" />
+    <Content Include="Views\Jeans\BrowseAllJeans1.cshtml" />
+    <Content Include="Views\Jeans\BrowseAllJeans.cshtml" />
+    <Content Include="Views\Jeans\SearchByBrand.cshtml" />
+    <Content Include="Views\Jeans\Details.cshtml" />
+    <Content Include="Views\Jeans\Create.cshtml" />
+    <Content Include="Views\Jeans\Edit.cshtml" />
+    <Content Include="Views\Customer\UpdateCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
+    <Folder Include="Views\Brand\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

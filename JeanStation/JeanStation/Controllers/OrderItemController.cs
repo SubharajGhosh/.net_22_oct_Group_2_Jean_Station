@@ -25,7 +25,7 @@ namespace JeanStation.Controllers
 
         // Add a new OrderItem for a Customer
         [HttpPost]
-        [Route("AddItemToOrder")]
+        [Route("AddOrderItem")]
         public IHttpActionResult AddItemToOrder(OrderItemdto orderItem)
         {
             try
@@ -35,7 +35,9 @@ namespace JeanStation.Controllers
                 {
                     return BadRequest("Insufficient stock or invalid product.");
                 }
-
+                Random random = new Random();
+                string orderItemId = $"ORID-{DateTime.Now:yyyyMMdd}-{random.Next(1000, 9999)}";
+                orderItem.OrderItemId = orderItemId;
                 orderItem.TotalPrice = jeans.Price * orderItem.Quantity;
                 _orderItemRepository.Add(orderItem);
                 return Ok("Order item added successfully.");

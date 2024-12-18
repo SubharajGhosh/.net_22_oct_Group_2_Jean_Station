@@ -9,7 +9,7 @@ namespace JeanStation.Repository
 {
     internal interface ICustomerRepository
     {
-        Customer GetCustomerByCustomerId(string customerId);
+        Customer GetCustomerByUserId(string UserId);
 
 
         // Update an existing customer

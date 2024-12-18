@@ -1,4 +1,5 @@
 ﻿using JeanStation.Entities;
+using JeanStation.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,14 @@ namespace JeanStation.Repository
         // Add a new Jeans record
         public void Add(Jeans jeans)
         {
+            // Map JeansDto to Jeans entity
+            
+
+            // Add the new Jeans entity to the database
             _context.Jeans.Add(jeans);
             _context.SaveChanges();
         }
+
 
         // Update an existing Jeans record
         public void UpdateJeans(Jeans jeans)
@@ -60,10 +66,42 @@ namespace JeanStation.Repository
         }
 
         // Get a Brand by its name
-        public Brand GetByBrandName(string name)
+        public List<JeansDto> GetJeansByBrandName(string brandName)
+
         {
-            return _context.Brands.FirstOrDefault(b => b.BrandName==name);
+
+            return _context.Jeans
+
+                           .Where(j => j.BrandNavigation.BrandName == brandName)
+
+                           .Select(j => new JeansDto
+
+                           {
+
+                               JeansId = j.JeansId,
+
+                               BrandId = j.BrandId,
+
+                               Type = j.Type,
+
+                               Color = j.Color,
+
+                               Size = j.Size,
+
+                               Price = j.Price,
+
+                               Stock = j.Stock,
+
+                               ImageUrl = j.ImageUrl,
+
+                               
+
+                           })
+
+                           .ToList();
+
         }
+
 
         // Update the stock of a Jeans record
         public void UpdateStock(Jeans jeans)

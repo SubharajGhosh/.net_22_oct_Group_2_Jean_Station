@@ -72,12 +72,28 @@ namespace JeanStation.Repository
 
 
         // Retrieve all order items by Order ID
-        public IEnumerable<OrderItem> GetByOrderId(string orderId)
+        public IEnumerable<OrderItemdto> GetByOrderId(string orderId)
         {
-            return _context.OrderItems.Include("JeanNavigation")
-                                      .Where(o => o.OrderId == orderId)
-                                      .ToList();
+            if (string.IsNullOrEmpty(orderId))
+                throw new ArgumentException("OrderId cannot be null or empty", nameof(orderId));
+
+            // Fetch order items and map them to OrderItemDTO
+            var orderItems = _context.OrderItems
+                                     .Where(oi => oi.OrderId == orderId)
+                                     .Select(oi => new OrderItemdto
+                                     {
+                                         OrderItemId = oi.OrderItemId,
+                                         OrderId = oi.OrderId,
+                                         JeansId = oi.JeansId,
+                                         Quantity = oi.Quantity,
+                                         UnitPrice = oi.UnitPrice,
+                                         // You can include additional properties if necessary
+                                     })
+                                     .ToList();
+
+            return orderItems;
         }
+
 
         // Clear the cart for a specific customer
         //public void ClearCart(string OrderId)

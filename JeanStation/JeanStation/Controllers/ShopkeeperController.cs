@@ -11,6 +11,7 @@ using System.Runtime.Remoting.Contexts;
 
 namespace JeanStation.Controllers
 {
+    [RoutePrefix("api/Shopkeeper")]
     public class ShopkeeperController : ApiController
     {
         private IShopkeeperRepository repository;
@@ -18,12 +19,12 @@ namespace JeanStation.Controllers
         {
             repository = new ShopkeeperRepository();
         }
-        [HttpGet, Route("GetShopkeeperByShopkeeperId/{shopkeeperId}")]
-        public IHttpActionResult GetShopkeeperByShopkeeperId(string shopkeeperId)
+        [HttpGet, Route("GetShopkeeperByUserId/{UserId}")]
+        public IHttpActionResult GetShopkeeperByUserId(string UserId)
         {
             try
             {
-                var shopkeeper = repository.GetShopkeeperByShopkeeperId(shopkeeperId);
+                var shopkeeper = repository.GetShopkeeperByUserId(UserId);
                 return Ok(shopkeeper);
             }
             catch (Exception ex)

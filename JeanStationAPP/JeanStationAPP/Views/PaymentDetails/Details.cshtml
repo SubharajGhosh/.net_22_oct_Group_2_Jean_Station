@@ -1,0 +1,52 @@
+﻿@model List<JeanStationAPP.Models.PaymentDetails>
+
+@{
+    ViewBag.Title = "Payment Details";
+}
+
+<h2>Payment Details for Order @Request.QueryString["orderId"]</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Payment Date</th>
+                <th>Amount</th>
+                <th>Payment Method</th>
+                <th>Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var payment in Model)
+            {
+                <tr>
+                    <td>@payment.PaymentId</td>
+                    <td>@payment.PaymentDate.ToString("yyyy-MM-dd")</td>
+                    <td>@payment.TotalAmount</td>
+                    <td>@payment.PaymentMode</td>
+                    <td>@payment.PaymentStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No payment details found for this order.</p>
+}
+
+<h3>Process Payment</h3>
+<form method="post" action="@Url.Action("ProcessPayment", "PaymentDetails")">
+    <input type="hidden" name="orderId" value="@Request.QueryString["orderId"]" />
+    <div class="form-group">
+        <label for="paymentMode">Select Payment Mode</label>
+        <select id="paymentMode" name="paymentMode" class="form-control">
+            <option value="Cash">Cash</option>
+            <option value="Card">Card</option>
+            <option value="Online">Online</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Payment</button>
+</form>

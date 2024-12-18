@@ -1,0 +1,27 @@
+﻿@model JeanStationAPP.Models.Shopkeeper
+
+<h2>Shopkeeper Dashboard</h2>
+
+<!-- Display Shopkeeper Info -->
+<div>
+    <h3>Shopkeeper Information</h3>
+    <p>Shop Name: @Model.ShopName</p>
+    <p>Shop Name: @Model.Location</p>
+    <p>Shop Name: @Model.Address</p>
+
+    <a href="@Url.Action("EditShopkeeper", new { shopkeeperId = Model.ShopkeeperId })">Edit Profile</a>
+    <form action="@Url.Action("DeleteShopkeeper", new { shopkeeperId = Model.ShopkeeperId })" method="post">
+        <button type="submit">Delete Account</button>
+    </form>
+</div>
+
+<!-- Action Links to navigate to other functionalities -->
+<div>
+    <h3>Manage Your Shop</h3>
+    <ul>
+        <li><a href="@Url.Action("BrowseAllJeans1", "Jeans")">Browse All Jeans</a></li>
+        <li><a href="@Url.Action("ViewOrdersByCustomerId", "Order")">Order Management</a></li>
+        <li><a href="@Url.Action("EditJeans", "Jeans")">Update Jeans Details</a></li>
+        <li><a href="@Url.Action("ViewAllCustomers", "Shopkeeper")">View All Customers</a></li>
+    </ul>
+</div>

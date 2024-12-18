@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace JeanStation.Controllers
 {
-    [RoutePrefix("api/customers")]
+    [RoutePrefix("api/Customer")]
     public class CustomerController : ApiController
     {
         private readonly ICustomerRepository _customerRepository;
@@ -18,10 +18,10 @@ namespace JeanStation.Controllers
             _customerRepository = new CustomerRepository();
         }
         [HttpGet]
-        [Route("{customerId}")]
-        public IHttpActionResult GetCustomerById(string customerId)
+        [Route("GetCustomerById/{UserId}")]
+        public IHttpActionResult GetCustomerById(string UserId)
         {
-            var customer = _customerRepository.GetCustomerByCustomerId(customerId);
+            var customer = _customerRepository.GetCustomerByUserId(UserId);
             if (customer == null)
             {
                 return NotFound(); // Return 404 if customer not found
@@ -32,7 +32,7 @@ namespace JeanStation.Controllers
 
         // PUT api/customers/{customerId}
         [HttpPut]
-        [Route("{customerId}")]
+        [Route("UpdateCustomer/{customerId}")]
         public IHttpActionResult UpdateCustomer(string customerId, [FromBody] Customer customer)
         {
             if (customer == null || customer.CustomerId != customerId)
@@ -53,7 +53,7 @@ namespace JeanStation.Controllers
 
         // DELETE api/customers/{customerId}
         [HttpDelete]
-        [Route("{customerId}")]
+        [Route("DeleteCustomer/{customerId}")]
         public IHttpActionResult DeleteCustomer(string customerId)
         {
             var success = _customerRepository.DeleteCustomer(customerId);

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using JeanStation.Models;
 namespace JeanStation.Repository
 {
     internal interface IPaymentDetailsRepository
     {
-        IEnumerable<PaymentDetails> GetPaymentByOrderId(string orderId);
+        IEnumerable<PaymentDetailsdto> GetPaymentByOrderId(string orderId);
         PaymentDetails ProcessPayment(string orderId, string paymentMode);
     }
 }

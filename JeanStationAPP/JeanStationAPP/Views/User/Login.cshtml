@@ -1,0 +1,47 @@
+﻿@model JeanStationAPP.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName)
+        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password)
+        @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Role)
+        @Html.DropDownListFor(model => model.Role, new List<SelectListItem>
+{
+            new SelectListItem { Text = "Customer", Value = "Customer" },
+            new SelectListItem { Text = "Shopkeeper", Value = "Shopkeeper" }
+        }, "-- Select Role --", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+    </div>
+    <div>
+        <span class="text-warning">@ViewBag.ErrMsg</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+    <div>
+    </div>
+}
+
+<hr />
+<p>
+    Don't have an account? <a href="@Url.Action("SignUp", "User")">Sign up here</a>
+</p>

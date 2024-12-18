@@ -1,0 +1,68 @@
+﻿@model List<JeanStationAPP.Models.Jeans>
+
+@{
+    ViewBag.Title = "Jeans List";
+}
+
+<h2 class="mb-3 text-center">Jeans Collection</h2>
+
+<p class="text-center">
+    @Html.ActionLink("Add New Jeans", "Create", null, new { @class = "btn btn-primary btn-sm" })
+</p>
+
+<div class="row">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                <div class="card text-center h-100 shadow-sm">
+                    <!-- Image Section -->
+                    <div style="position: relative; height: 200px; overflow: hidden;">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl" class="card-img-top img-fluid" alt="Jeans Image"
+                                 style="object-fit: cover; width: 100%; height: 100%;" />
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-content-center align-items-center bg-light"
+                                 style="height: 100%; color: gray;">
+                                <span>No Image</span>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Body Section -->
+                    <div class="card-body">
+                        <div class="bg-primary text-white py-2 rounded mb-2" style="font-weight: bold;">
+                            <p class="mb-1"><strong>JeansId:</strong> @item.JeansId</p>
+                        </div>
+                        <p class="mb-1"><strong>Brand:</strong> @item.BrandId</p>
+                        <p class="mb-1"><strong>Type:</strong> @item.Type</p>
+                        <p class="mb-1"><strong>Size:</strong> @item.Size</p>
+                        <p class="mb-1"><strong>Price:</strong> @item.Price</p>
+
+                        <p><strong>Stock:</strong> @item.Stock</p>
+                    </div>
+
+                    <!-- Actions Section -->
+                    <div class="card-footer bg-white">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.JeansId }, new { @class = "btn btn-warning btn-sm mx-1" })
+                        <form action="@Url.Action("Delete", "Jeans", new { id = item.JeansId })" method="post">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12 text-center">
+            <h4>No jeans available.</h4>
+        </div>
+    }
+</div>
+
+has context menu

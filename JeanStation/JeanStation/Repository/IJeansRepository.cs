@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using JeanStation.Entities;
+using JeanStation.Models;
 
 namespace JeanStation.Repository
 {
@@ -15,7 +16,7 @@ namespace JeanStation.Repository
         void Add(Jeans jeans);
         void UpdateJeans(Jeans jeans);
         void Delete(string id);
-        Brand GetByBrandName(string name);
+        List<JeansDto> GetJeansByBrandName(string brandName);
         void UpdateStock(Jeans jeans);
 
        

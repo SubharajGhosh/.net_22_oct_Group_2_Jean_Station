@@ -1,0 +1,41 @@
+﻿@model List<JeanStationAPP.Models.Order>
+
+@{
+    ViewBag.Title = "Orders List";
+}
+
+<h2>Orders for Customer @Request.QueryString["customerId"]</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Order Status</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.OrderDate</td>
+                    <td>@order.OrderStatus</td>
+                    <td>@order.Amount</td>
+                    <td>
+                        <a href="@Url.Action("Details", "Order", new { orderId = order.OrderId })" class="btn btn-info">View Details</a>
+                        <a href="@Url.Action("Delete", "Order", new { orderId = order.OrderId, customerId = Request.QueryString["customerId"] })" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this order?');">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No orders found for this customer.</p>
+}

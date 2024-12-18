@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Error";
+}
+
+<h2>Error</h2>
+
+<div class="alert alert-danger">
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p>@ViewBag.ErrorMessage</p>
+    }
+    else
+    {
+        <p>An unexpected error occurred.</p>
+    }
+</div>

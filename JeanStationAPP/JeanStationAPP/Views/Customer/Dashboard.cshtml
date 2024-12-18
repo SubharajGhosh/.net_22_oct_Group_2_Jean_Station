@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Customer Dashboard</h2>
+
+<ul>
+    <li><a href="@Url.Action("BrowseAllJeans", "Customer")">Browse All Jeans</a></li>
+    <li><a href="@Url.Action("UpdateCustomer", "Customer")">Update Customer Details</a></li>
+    <li><a href="@Url.Action("ShowDetails", "Customer")">View Customer Details</a></li>
+    <li><a href="@Url.Action("OrderHistory", "Customer")">Order History</a></li>
+</ul>

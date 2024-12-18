@@ -1,0 +1,28 @@
+﻿@model JeanStation.Entities.Customer
+
+@{
+    ViewBag.Title = "Customer Details";
+}
+
+<h2>Customer Details</h2>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <td>@Model.CustomerName</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <th>Phone Number</th>
+        <td>@Model.PhoneNumber</td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td>@Model.Address</td>
+    </tr>
+</table>
+
+<a href="@Url.Action("Dashboard", "Customer")" class="btn btn-secondary">Back to Dashboard</a>

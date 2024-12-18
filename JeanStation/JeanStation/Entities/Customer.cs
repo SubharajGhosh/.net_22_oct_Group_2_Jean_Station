@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 
 
 namespace JeanStation.Entities
@@ -21,5 +22,6 @@ namespace JeanStation.Entities
         public string UserId { get; set; }
         public User UserNavigation { get; set; }
 
+        
     }
 }

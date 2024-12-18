@@ -38,7 +38,7 @@ namespace JeanStation.Controllers
                 }
 
                 _orderRepository.CreateOrder(orderDto);
-                return Ok("Order created successfully.");
+                return Ok();
             }
             catch (Exception ex)
             {

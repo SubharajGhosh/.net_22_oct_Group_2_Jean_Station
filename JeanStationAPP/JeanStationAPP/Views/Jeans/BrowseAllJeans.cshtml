@@ -1,0 +1,96 @@
+﻿@model List<JeanStationAPP.Models.Jeans>
+
+@{
+    ViewBag.Title = "Jeans Collection";
+}
+
+<h2 class="mb-3 text-center">Jeans Collection</h2>
+
+<!-- Search Bar -->
+<div class="row mb-4">
+    <div class="col-md-6 offset-md-3">
+        <form method="post" action="@Url.Action("SearchByBrand", "Jeans")">
+            <div class="form-group">
+                <label for="brandName">Brand Name:</label>
+                <input type="text" id="brandName" name="brandName" class="form-control" placeholder="Enter brand name" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+</div>
+
+<!-- Success/Error Messages -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["Success"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">
+        @TempData["Error"]
+    </div>
+}
+
+<div class="row">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                <div class="card text-center h-100 shadow-sm">
+                    <!-- Image Section -->
+                    <div style="position: relative; height: 200px; overflow: hidden;">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl" class="card-img-top img-fluid" alt="Jeans Image"
+                                 style="object-fit: cover; width: 100%; height: 100%;" />
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-content-center align-items-center bg-light"
+                                 style="height: 100%; color: gray;">
+                                <span>No Image</span>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Body Section -->
+                    <div class="card-body">
+                        <div class="bg-primary text-white py-2 rounded mb-2" style="font-weight: bold;">
+                            @item.Type
+                        </div>
+                        <p class="mb-1"><strong>Size:</strong> @item.Size</p>
+                        <p class="mb-1"><strong>Price:</strong> @item.Price</p>
+                        <p><strong>Stock:</strong> @item.Stock</p>
+                    </div>
+
+                    <!-- Actions Section -->
+                    <div class="card-footer bg-white">
+                        @*<form method="get" action="@Url.Action("GetCartDetails", "Cart",new {jeansId=item.JeansId,price=item.Price})">
+            <input type="hidden" name="JeansId" value="@item.JeansId" />
+            <input type="hidden" name="Price" value="@item.Price" />
+            <button type="submit" class="btn btn-success btn-sm">Add to Cart</button>
+        </form>*@
+                        <a href="@Url.Action("GetCartDetails", "Cart",new {jeansId=item.JeansId,price=item.Price})" class="btn btn-info btn-sm mt-2">Add to Cart</a>
+                        <!-- Details Button -->
+                        <a href="@Url.Action("Details", "Jeans", new { id = item.JeansId })" class="btn btn-info btn-sm mt-2">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <!-- No Data Message -->
+        <div class="col-12 text-center">
+            <h4>No jeans available.</h4>
+        </div>
+    }
+</div>
+
+<!-- View Cart Button -->
+<div class="text-center mt-4">
+    <a href="@Url.Action("Index", "Cart")" class="btn btn-primary btn-lg">View Cart</a>
+</div>

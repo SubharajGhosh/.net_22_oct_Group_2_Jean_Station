@@ -10,7 +10,7 @@ using JeanStation.Repository;
 
 namespace JeanStation.Controllers
 {
-
+    [RoutePrefix("api/Jeans")]
     public class JeansController : ApiController
     {
         private JeansRepository JeansRepository { get; set; }
@@ -35,11 +35,11 @@ namespace JeanStation.Controllers
             return Ok(v);
         }
 
-        [HttpGet, Route("GetJeansByName/{name}")]
+        [HttpGet, Route("GetJeansByBrandName/{name}")]
 
         public IHttpActionResult GetJeansByName(string name)
         {
-            var v = JeansRepository.GetByBrandName(name);
+            var v = JeansRepository.GetJeansByBrandName(name);
             return Ok(v);
         }
 

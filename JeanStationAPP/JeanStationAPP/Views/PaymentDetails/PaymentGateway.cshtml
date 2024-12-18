@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Payment Gateway";
+}
+
+<h3>Order Payment</h3>
+<p>Order ID: @ViewBag.OrderId</p>
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
+<form method="post" action="@Url.Action("ProcessPayment", "PaymentDetails")">
+    <input type="hidden" name="orderId" value="@ViewBag.OrderId" />
+    <div class="form-group">
+        <label for="paymentMode">Select Payment Mode</label>
+        <select id="paymentMode" name="paymentMode" class="form-control">
+            <option value="Cash">Cash</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Payment</button>
+</form>

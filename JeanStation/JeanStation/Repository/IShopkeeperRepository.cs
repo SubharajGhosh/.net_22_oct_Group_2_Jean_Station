@@ -10,7 +10,7 @@ namespace JeanStation.Repository
 {
     internal interface IShopkeeperRepository
     {
-        Shopkeeper GetShopkeeperByShopkeeperId(string shopkeeperId);
+        Shopkeeper GetShopkeeperByUserId(string UserId);
         Shopkeeper UpdateShopkeeper(ShopkeeperDto shopkeeperDto);
         bool DeleteShopkeeper(string shopkeeperId);
         IEnumerable<Customer> GetAllCustomers();
