@@ -114,7 +114,7 @@ namespace JeanStation.Controllers
                 return RedirectToAction("Login", "User"); // Redirect to login if not logged in
             }
 
-            return RedirectToAction("Index", "Orders");
+            return RedirectToAction("Index", "Order");
         }
     }
 }
