@@ -133,7 +133,7 @@ namespace JeanStationAPP.Controllers
             }
         }
 
-        [HttpPost]
+       
         public ActionResult UpdateQuantity(string cartId, int newQuantity)
         {
             string customerId = Session["CustomerId"] as string;
@@ -147,7 +147,7 @@ namespace JeanStationAPP.Controllers
                 var updateData = new { cartId, newQuantity };
                 string jsonContent = JsonConvert.SerializeObject(updateData);
                 HttpContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PutAsync(apiBaseUrl + "update-quantity", content).Result;
+                HttpResponseMessage response = client.PutAsync(apiBaseUrl + "update-quantity?CartId="+cartId+"&"+"Quantity="+newQuantity, null).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");

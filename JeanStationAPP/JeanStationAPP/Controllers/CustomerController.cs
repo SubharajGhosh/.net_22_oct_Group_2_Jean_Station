@@ -58,7 +58,7 @@ namespace JeanStation.Controllers
             }
         }
 
-        [HttpPost]
+        
         public ActionResult UpdateCustomer(Customer customer)
         {
             if (!ModelState.IsValid)

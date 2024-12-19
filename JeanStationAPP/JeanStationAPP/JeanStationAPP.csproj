@@ -224,6 +224,7 @@
     <Content Include="Views\Jeans\Create.cshtml" />
     <Content Include="Views\Jeans\Edit.cshtml" />
     <Content Include="Views\Customer\UpdateCustomer.cshtml" />
+    <Content Include="Views\Customer\ShowDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

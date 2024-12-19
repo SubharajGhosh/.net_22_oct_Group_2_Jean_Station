@@ -28,10 +28,10 @@ else
                 <tr>
                     <td>@item.JeansId</td>
                     <td>
-                        <form method="post" action="@Url.Action("UpdateQuantity", "Cart")" class="form-inline">
+                        <form action="@Url.Action("UpdateQuantity", "Cart",new {cartId=item.CartId,newQuantity=item.Quantity})" class="form-inline">
                             <input type="hidden" name="cartId" value="@item.CartId" />
                             <input type="number" name="newQuantity" value="@item.Quantity" min="1" class="form-control" style="width: 80px;" />
-                            <input type="hidden" name="customerId" value="@item.CustomerId" />
+
                             <button type="submit" class="btn btn-primary btn-sm">Update</button>
                         </form>
                     </td>
