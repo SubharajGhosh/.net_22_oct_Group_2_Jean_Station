@@ -15,18 +15,10 @@
         @Html.TextBoxFor(m => m.ShopName, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.ShopName, "", new { @class = "text-danger" })
     </div>
+    <input type="hidden" name="cartId" value="@Model.ShopkeeperId" />
+    <input type="hidden" name="cartId" value="@Model.Location" />
+    <input type="hidden" name="cartId" value="@Model.UserId" />
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email)
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.PhoneNumber)
-        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
-    </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Address)

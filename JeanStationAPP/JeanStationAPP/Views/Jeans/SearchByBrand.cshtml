@@ -49,10 +49,8 @@
                 </td>
                 <td>
                     <!-- Add to Cart Button -->
-                    <form method="post" action="@Url.Action("AddToCart", "Cart")">
-                        <input type="hidden" name="JeansId" value="@jean.JeansId" />
-                        <button type="submit" class="btn btn-success btn-sm">Add to Cart</button>
-                    </form>
+                    <a href="@Url.Action("GetCartDetails", "Cart",new {jeansId=jean.JeansId,price=jean.Price})" class="btn btn-info btn-sm mt-2">Add to Cart</a>
+
                 </td>
             </tr>
         }

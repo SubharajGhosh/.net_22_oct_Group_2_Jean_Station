@@ -37,16 +37,3 @@ else
     <p>No payment details found for this order.</p>
 }
 
-<h3>Process Payment</h3>
-<form method="post" action="@Url.Action("ProcessPayment", "PaymentDetails")">
-    <input type="hidden" name="orderId" value="@Request.QueryString["orderId"]" />
-    <div class="form-group">
-        <label for="paymentMode">Select Payment Mode</label>
-        <select id="paymentMode" name="paymentMode" class="form-control">
-            <option value="Cash">Cash</option>
-            <option value="Card">Card</option>
-            <option value="Online">Online</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit Payment</button>
-</form>

@@ -37,10 +37,7 @@
                         <dd class="col-sm-8">@Html.DisplayFor(model => model.Price)</dd>
 
 
-                        <form method="post" action="@Url.Action("AddToCart", "Cart")">
-                            <input type="hidden" name="JeansId" value="@Model.JeansId" />
-                            <button type="submit" class="btn btn-success btn-sm">Add to Cart</button>
-                        </form>
+                        <a href="@Url.Action("GetCartDetails", "Cart",new {jeansId=Model.JeansId,price=Model.Price})" class="btn btn-info btn-sm mt-2">Add to Cart</a>
                     </dl>
                     <div class="d-flex justify-content-between">
                         <p>

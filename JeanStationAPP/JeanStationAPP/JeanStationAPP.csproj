@@ -228,6 +228,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Services\" />
     <Folder Include="Views\Brand\" />
   </ItemGroup>
   <ItemGroup>

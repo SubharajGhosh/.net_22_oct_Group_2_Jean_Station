@@ -32,7 +32,7 @@ namespace JeanStation.Controllers
 
         // PUT api/customers/{customerId}
         [HttpPut]
-        [Route("UpdateCustomer/{customerId}")]
+        [Route("UpdateCustomer")]
         public IHttpActionResult UpdateCustomer(string customerId, [FromBody] Customer customer)
         {
             if (customer == null || customer.CustomerId != customerId)
